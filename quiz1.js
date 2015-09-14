@@ -65,9 +65,11 @@ console.log(reverseStringV2("Hi there") === "ereht iH");
   Design a javascript function such that the first letters in each of the words 
   is capitalized.
   Input => "hello world" and Output => "Hello World"
-  Hints: You may have to use the following methods: split(), splice(), 
-  toUpperCase() */
+  Hints: You may have to use the following methods: split(), splice(), toUpperCase() */
 //console.clear();
+
+// Capitalize first letter of each word,
+// but a new array has been used
 function capitalizeLetters(str) {
   var wordArray = []; 
   var splitStr = str.split(' '); // split returns an array
@@ -79,8 +81,52 @@ function capitalizeLetters(str) {
     wordArray.push(splitWord);
   };
   str = wordArray.join(' ');
-  console.log('str:', str);
   return str; 
+}
+
+// Capitalize first letter of each word,
+// no new arrays used, but trim() used
+function capitalizeLetters1 (str) {
+  var splitStr = str.split(' '); // split returns an array
+  str = ''; // reset str to empty string
+
+  for (var i = 0; i < splitStr.length; i++) {
+    var splitWord = splitStr[i].split(''); // split returns an array of letters
+      splitWord.splice(0, 1, splitWord[0].toUpperCase());//replace letter 1:caps
+      splitWord = splitWord.join(''); // turns array to string
+    str += splitWord + ' '; // white space trimmed at return
+  };
+  return str.trim(); // trim white space
+}
+
+// Capitalize first letter of each word, no new arrays used
+function capitalizeLetters1(str) {
+  // split the string where an empty space is found
+  var splitStr = str.split(' '); // split returns an array
+
+  // reset str to empty string
+  str = '';
+
+  // iterate over the splitStr array
+  for (var i=0; i < splitStr.length; i++) {
+
+    // capitilize first letter, and store in new variable
+    var word = splitStr[i][0].toUpperCase();
+
+    // remove position 1 letter, concatenate rest of the word
+    word += splitStr[i].substring(1);
+
+    // add a space after each word, except
+    // the last word, since the loop ends there
+    if (str !== '') {
+      str += ' ';
+    }
+
+    // concatenate each word
+    str += word;
+  }
+
+  return str;
 }
 // NOTE: -> for you to know whether you've written the right code, the log below
 // should be true.
@@ -109,8 +155,8 @@ function vowelCount(str){
   };    
   return vowelCount;
 }
-// This is a handy function that can be used to establish whether a character 
-// is a vowel
+// This is a handy function that can be used
+// to establish whether a character is a vowel
 function isVowel(vowel){
     var vowels = ["a", "e", "i", "o", "u"];
     isTrue = false;
@@ -140,18 +186,33 @@ function numberEncoding(str){
    17, 18, 19, 20, 21, 22, 23, 24, 25];
   var symArray = [' ', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*',
   '(', ')', '-', '_', '=', '+', ',', ',', '.', '/', '<', '>', '?', ';', 
-  '"', ':', '[', ']', '{', '}', '\\', '|', "'"];  
+  '"', ':', '[', ']', '{', '}', '\\', '|', "'"];
+
   // split str
   var splitStr = str.split('');
   var encodedArray = [];
+
+  // 
   for (var i = 0; i < splitStr.length; i++) {
     for (var j = 0; j < alphaArray.length; j++) {
+
+      // if splitStr item is a letter, push
+      // corresponding numbered position to encodedArray
       if (splitStr[i] === alphaArray[j]) {
         encodedArray.push(numArray[j]);
+
+        // if item is a whole number and item is not = to the
+        // current item in encodedArray, push it to encodedArray
       } else if (splitStr[i] >= 0 && splitStr[i] !== encodedArray[i]) {
         encodedArray.push(splitStr[i]);
+
+        // if item is not = to the current item in 
+        // encodedArray, iterate over symArray 
       } else if (splitStr[i] !== encodedArray[i]) {
         for (var k = 0; k < symArray.length; k++) {
+
+          // if item is a symbol or space,
+          // push it to encodedArray 
           if (splitStr[i] === symArray[k]) {
             encodedArray.push(splitStr[i]);
           };
@@ -159,12 +220,14 @@ function numberEncoding(str){
       }
     };
   };
+
+  // join() turns array to string 
   str = encodedArray.join('');
   return str;
 }
-console.log(numberEncoding('af5c \'\'#'));
+console.log(numberEncoding('33af5c \'\'#'));
 // Ensure that when you run this code, the value below that is out is `true`
-console.log(numberEncoding('af5c') === '1653');
+console.log(numberEncoding('33af5c') === '331653');
 
 /* 26 - Array Quiz -------------------------------------------------------------
  Design a function arrayAddition(arr) that takes an array of numbers stored in 
@@ -182,18 +245,26 @@ function arrayAddition(arr){
   arr.sort(function(a, b){
       return a - b
   });
+
   // get the largest out
   var largest = arr.pop();
   var sum = 0;
-  // more of your code can go here.
+
   for (var i = arr.length-1; i >= 0; i--) {
-    if(sum + arr[i] < 45) {
+
+    // calculate if sum is less than largest
+    if(sum + arr[i] < largest) {
       sum += arr[i];
       console.log('sum:', sum, 'arr[i]:', arr[i]);
     }
-    else if(sum + arr[i] === 45) {
+
+    // calculate if sum equals largest
+    else if(sum + arr[i] === largest) {
       sum += arr[i];
+
+      // show each stage of calculation
       console.log('sum:', sum, 'arr[i]:', arr[i]);
+      
       return true;
     }
   };
