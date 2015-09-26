@@ -1,3 +1,7 @@
+/*
+In this quiz, can you list the date of birth of 
+each of the musicians inside the gist below */
+
 var musicians = [
   {name: "Louis Armstrong", genre: "Jazz", birthday: "August 4, 1901"},
   {name: "Miles Davis", genre: "Jazz", birthday: "May 26, 1926"},
@@ -10,4 +14,7 @@ var musicians = [
   
 // Complete the pieces of code below; Use the map function
 
-var birthdays = musicians.map();
+var birthdays = musicians.map(function(musician){
+  return musician.name + ': ' + musician.birthday;
+});
+console.log(birthdays);
