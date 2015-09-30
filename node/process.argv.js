@@ -36,15 +36,17 @@ process.argv.forEach(function(value, index, array) {
 
 // Use the reduce function to find the sum
 var sumOf = function(array){
-  return array.reduce(function(a, b){
-    return a + b;
-  }, 0);
+  return array.reduce(function(current, next){
+    console.log('current:' + current, 'next:' + next);
+    return current + next;
+  }, 10);
 };
 
 console.log('\nNOTE: Sum of our numbers:');
 
 // The splice function return only our numbers
 // Use map to parse each number string to a float
+console.log(process.argv);
 var numbers = process.argv.splice(2).map(function(num){
   return parseFloat(num);
 });
